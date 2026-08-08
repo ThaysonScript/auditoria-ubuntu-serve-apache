@@ -37,6 +37,9 @@ administrativo, permissões dos arquivos web e atualização do Apache.
 - Apache HTTP Server
 - Linux CLI
 
+## Guia
+As guias para essa atividade podem ser lidas em [auditoria/](./auditoria).
+
 ## Evidências
 
 As evidências coletadas durante a auditoria estão disponíveis em
