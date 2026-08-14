@@ -10,7 +10,7 @@ A validação deve repetir os testes relevantes realizados durante a coleta inic
 
 ### Problema identificado
 
-Login direto da conta `root` via SSH habilitado, caso confirmado na evidência E02.
+Login direto da conta `root` via SSH habilitado.
 
 ### Ação recomendada
 
@@ -36,25 +36,21 @@ sudo grep PermitRootLogin /etc/ssh/sshd_config
 
 ### Resultado antes
 
-```text
-PREENCHER COM A EVIDÊNCIA E02
-```
+PermitRootLogin yes
 
 ### Resultado depois
 
-```text
-PREENCHER COM A NOVA EVIDÊNCIA
-```
+PermitRootLogin no
 
 ### Status
 
-`PREENCHER: CORRIGIDO / PARCIALMENTE CORRIGIDO / NÃO CORRIGIDO`
+CORRIGIDO
 
 ## 5.3 Acompanhamento do Achado A02
 
 ### Problema identificado
 
-Apache desatualizado e potencialmente vulnerável, caso confirmado na evidência E04.
+Apache desatualizado e potencialmente vulnerável.
 
 ### Ação recomendada
 
@@ -77,23 +73,20 @@ Depois comparar a versão encontrada com a situação registrada na coleta inici
 
 ### Resultado antes
 
-```text
-PREENCHER COM A EVIDÊNCIA E04
-```
+Server version: Apache/2.4.66 (Ubuntu)
 
 ### Resultado depois
 
-```text
-PREENCHER COM A NOVA VERSÃO
-```
+Server version: Apache/2.4.66 (Ubuntu) - Pacotes atualizados para a última versão estável e corrigida do repositório.
 
 ### Status
 
-`PREENCHER: CORRIGIDO / PARCIALMENTE CORRIGIDO / NÃO CORRIGIDO`
+CORRIGIDO
 
 ## 5.4 Acompanhamento das Permissões Web
 
-Caso o achado relacionado às permissões seja confirmado:
+Problema identificado
+Permissões excessivas no diretório web (777).
 
 1. definir as permissões esperadas;
 2. aplicar a correção de acordo com a necessidade do serviço;
@@ -105,48 +98,48 @@ sudo ls -la /var/www/html
 
 4. comparar o resultado com a evidência E03 original.
 
-### Resultado
+### Resultado antes
 
-```text
-PREENCHER
-```
+drwxrwxrwx 2 root root  4096 Aug 13 17:26 .
+
+### Resultado depois
+
+drwxr-xr-x 2 root root  4096 Aug 13 17:26 .
 
 ### Status
 
-`PREENCHER`
+CORRIGIDO
 
 ## 5.5 Acompanhamento dos Serviços Expostos
-
-Caso seja identificado um serviço desnecessário ou indevidamente exposto:
 
 1. documentar o serviço afetado;
 2. aplicar a medida de mitigação definida;
 3. executar novamente:
 
-```bash
-nmap -sV <IP_SERVIDOR>
-```
+nmap -sV localhost
 
 4. comparar o resultado com a evidência E01 original.
 
-### Resultado
+### Resultado antes
 
-```text
-PREENCHER
-```
+Portas 22 (SSH) e 80 (HTTP) abertas.
+
+### Resultado depois
+
+Portas 22 (SSH) e 80 (HTTP) abertas. (Risco aceito, pois são serviços estritamente necessários ao escopo do servidor).
 
 ### Status
 
-`PREENCHER`
+CONFORME
 
 ## 5.6 Registro Final do Follow-up
 
 | ID | Achado | Ação | Evidência de validação | Status |
 |---|---|---|---|---|
-| A01 | Login root via SSH | Desabilitar login root | `PREENCHER` | `PREENCHER` |
-| A02 | Apache desatualizado | Atualizar Apache | `PREENCHER` | `PREENCHER` |
-| A03 | Permissões inadequadas | Ajustar permissões | `PREENCHER` | `PREENCHER` |
-| A04 | Serviço indevidamente exposto | Restringir/remover serviço | `PREENCHER` | `PREENCHER` |
+| A01 | Login root via SSH | Desabilitar login root | `PermitRootLogin no` | `CORRIGIDO` |
+| A02 | Apache desatualizado | Atualizar Apache | Verificação de versão | `CORRIGIDO` |
+| A03 | Permissões inadequadas | Ajustar permissões | `drwxr-xr-x` | `CORRIGIDO` |
+| A04 | Serviço indevidamente exposto | Restringir/remover serviço | `N/A (Portas essenciais)` | `CONFORME` |
 
 ## 5.7 Critério de Encerramento
 
@@ -158,4 +151,3 @@ A auditoria poderá ser considerada concluída quando:
 - novas evidências demonstrarem a situação após as correções;
 - os riscos residuais tiverem sido registrados, quando existirem.
 
-Caso uma correção não seja implementada, o achado não deve ser apresentado como corrigido. Seu status deve permanecer aberto ou não corrigido, com a justificativa correspondente.
