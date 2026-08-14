@@ -81,24 +81,34 @@ Atualizar o Apache para uma versão corrigida e suportada e realizar nova verifi
 ## 4.6 Riscos Relacionados às Permissões
 
 **Ativo:** arquivos do site em `/var/www/html`  
-**Ameaça:** alteração não autorizada do conteúdo web  
-**Vulnerabilidade:** permissões excessivas, caso identificadas  
-**Probabilidade:** `preencher`  
-**Impacto:** `preencher`  
-**Risco:** `preencher`
+**Ameaça:** alteração não autorizada do conteúdo web (Defacement)  
+**Vulnerabilidade:** permissões excessivas (777), permitindo escrita para todos os usuários  
+**Probabilidade:** Alta  
+**Impacto:** Alto  
+**Risco:** Alto
 
-A classificação deve ser determinada somente após análise da evidência E03.
+### Justificativa
+Com permissões totais no diretório web, qualquer usuário, serviço ou processo com acesso mínimo ao sistema possui a capacidade de alterar, excluir ou inserir códigos maliciosos nas páginas do servidor.
+
+### Tratamento
+**Mitigar.**
+Ajustar o proprietário, grupo e as permissões do diretório web de acordo com o princípio do menor privilégio.
 
 ## 4.7 Riscos Relacionados aos Serviços Expostos
 
 **Ativo:** superfície de rede do servidor  
 **Ameaça:** exploração de serviço desnecessariamente exposto  
-**Vulnerabilidade:** serviço não necessário ou inadequadamente protegido, caso identificado na E01  
-**Probabilidade:** `preencher`  
-**Impacto:** `preencher`  
-**Risco:** `preencher`
+**Vulnerabilidade:** Nenhuma vulnerabilidade identificada neste item  
+**Probabilidade:** Baixa  
+**Impacto:** Baixo  
+**Risco:** Baixo
 
-A simples existência de portas abertas não é suficiente para caracterizar um risco. É necessário verificar se o serviço é necessário e se sua configuração atende aos critérios.
+### Justificativa
+Foi constatado que apenas os serviços estritamente necessários para a operação do servidor (SSH para administração na porta 22 e HTTP para o site na porta 80) estão expostos.
+
+### Tratamento
+**Aceitar o risco.**
+Manter o monitoramento contínuo dos serviços essenciais expostos, sem a necessidade de ações corretivas, visto que a configuração condiz com o escopo.
 
 ## 4.8 Plano de Tratamento
 
@@ -106,8 +116,8 @@ A simples existência de portas abertas não é suficiente para caracterizar um 
 |---|---|---|---|---|
 | A01 | Login root via SSH | Mitigar | Desabilitar `PermitRootLogin` | Alta |
 | A02 | Apache vulnerável | Mitigar | Atualizar Apache | Média |
-| A03 | Permissões inadequadas | Mitigar, se confirmado | Ajustar proprietário/grupo/permissões | `preencher` |
-| A04 | Serviço indevidamente exposto | Mitigar, se confirmado | Remover ou restringir serviço | `preencher` |
+| A03 | Permissões inadequadas | Mitigar | Ajustar proprietário/grupo/permissões | Alta |
+| A04 | Serviço indevidamente exposto | Aceitar | Manter configurações padrão (Sem ação requerida) | Baixa |
 
 ## 4.9 Critério de Aceitação
 
