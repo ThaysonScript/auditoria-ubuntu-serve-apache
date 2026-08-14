@@ -16,7 +16,7 @@ Registrar as informações básicas do ambiente auditado:
 | Endereço IP | `XXX.XXX.XXX.XXX` (Anonimizado) |
 | Hostname | `LAPTOP-TCLE4H9L` |
 | Data da coleta | 13/08/2026 |
-| Auditor | Pedro Arthur Batista Pinheiro |
+| Auditor | Pedro Arthur Patriota Pinheiro |
 
 > O endereço IP pode ser anonimizado caso o resultado seja publicado em um repositório público.
 
