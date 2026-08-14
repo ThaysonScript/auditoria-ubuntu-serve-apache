@@ -12,13 +12,20 @@ Registrar as informações básicas do ambiente auditado:
 
 | Informação | Resultado |
 |---|---|
-| Sistema operacional | `preencher` |
-| Endereço IP | `preencher` |
-| Hostname | `preencher` |
-| Data da coleta | `preencher` |
-| Auditor | `preencher` |
+| Sistema operacional | Ubuntu Linux (WSL) |
+| Endereço IP | `XXX.XXX.XXX.XXX` (Anonimizado) |
+| Hostname | `LAPTOP-TCLE4H9L` |
+| Data da coleta | 13/08/2026 |
+| Auditor | Pedro Arthur Batista Pinheiro |
 
 > O endereço IP pode ser anonimizado caso o resultado seja publicado em um repositório público.
+
+## 2.3 Evidência E01 — Serviços e Portas Expostas
+
+### Comando
+
+```bash
+nmap -sV <IP_SERVIDOR>
 
 ## 2.3 Evidência E01 — Serviços e Portas Expostas
 
@@ -34,25 +41,34 @@ Identificar portas abertas, serviços acessíveis e versões detectadas pelo Nma
 
 ### Resultado
 
-Registrar aqui o resultado obtido:
+Starting Nmap 7.98 ( [https://nmap.org](https://nmap.org) ) at 2026-08-13 19:57 -0300
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.000038s latency).
+Other addresses for localhost (not scanned): ::1
+Not shown: 998 closed tcp ports (conn-refused)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 10.2p1 Ubuntu 2ubuntu3.5 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.66 ((Ubuntu))
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
-```text
-COLE A SAÍDA DO NMAP AQUI
-```
+Service detection performed. Please report any incorrect results at [https://nmap.org/submit/](https://nmap.org/submit/) .
+Nmap done: 1 IP address (1 host up) scanned in 6.41 seconds
 
 ### Interpretação
 
-Registrar quais serviços foram identificados e verificar se cada serviço exposto é esperado dentro do escopo do servidor.
+Foram identificados dois serviços em execução:
 
-A presença de uma porta aberta não deve ser classificada automaticamente como vulnerabilidade. O resultado deve ser analisado considerando a necessidade do serviço e os critérios de segurança definidos.
+Porta 22 (SSH): Rodando o serviço OpenSSH versão 10.2p1. Serviço esperado para administração remota.
+
+Porta 80 (HTTP): Rodando o serviço web Apache versão 2.4.66. Serviço esperado para o servidor web.
+
+Os serviços expostos condizem com o escopo do servidor.
 
 ## 2.4 Evidência E02 — Configuração de Login Root via SSH
 
 ### Comando
 
-```bash
 sudo grep PermitRootLogin /etc/ssh/sshd_config
-```
 
 ### Objetivo
 
@@ -60,25 +76,18 @@ Verificar se o acesso direto da conta `root` via SSH está habilitado.
 
 ### Resultado
 
-Registrar aqui o resultado obtido:
-
-```text
-COLE A SAÍDA DO COMANDO AQUI
-```
+PermitRootLogin yes
+# the setting of "PermitRootLogin prohibit-password".
 
 ### Interpretação
 
-- `PermitRootLogin yes`: indica que o login direto do root está habilitado e deve ser tratado como possível não conformidade de alto risco no contexto do estudo de caso;
-- `PermitRootLogin no`: indica que o login direto do root está desabilitado;
-- ausência da diretiva ou configuração diferente: deve ser analisada considerando a configuração efetiva do OpenSSH e o critério adotado.
+PermitRootLogin yes: indica que o login direto do root está habilitado e deve ser tratado como uma não conformidade de alto risco no contexto da auditoria, pois permite acesso administrativo remoto direto.
 
 ## 2.5 Evidência E03 — Permissões dos Arquivos Web
 
 ### Comando
 
-```bash
 sudo ls -la /var/www/html
-```
 
 ### Objetivo
 
@@ -86,25 +95,20 @@ Verificar proprietário, grupo e permissões dos arquivos utilizados pelo servid
 
 ### Resultado
 
-Registrar aqui o resultado obtido:
-
-```text
-COLE A SAÍDA DO COMANDO AQUI
-```
+total 20
+drwxrwxrwx 2 root root  4096 Aug 13 17:26 .
+drwxr-xr-x 3 root root  4096 Aug 13 17:26 ..
+-rw-r--r-- 1 root root 10672 Aug 13 17:26 index.html
 
 ### Interpretação
 
-Avaliar se as permissões permitem somente as operações necessárias e se usuários não autorizados possuem capacidade indevida de modificar os arquivos do site.
-
-Não classificar uma permissão como vulnerável apenas pela aparência do modo numérico ou simbólico. A análise deve considerar proprietário, grupo, finalidade do arquivo e necessidade operacional.
+As permissões do diretório atual (.) estão definidas como drwxrwxrwx (modo 777). Isso significa que qualquer usuário do sistema, autorizado ou não, possui capacidade total de ler, gravar e executar (modificar) os arquivos do site. Essa configuração é excessiva e representa um risco de segurança.
 
 ## 2.6 Evidência E04 — Versão do Apache
 
 ### Comando
 
-```bash
 apache2 -v
-```
 
 ### Objetivo
 
@@ -112,26 +116,21 @@ Identificar a versão instalada do Apache HTTP Server e verificar posteriormente
 
 ### Resultado
 
-Registrar aqui o resultado obtido:
-
-```text
-COLE A SAÍDA DO COMANDO AQUI
-```
+Server version: Apache/2.4.66 (Ubuntu)
+Server built:   2026-07-06T15:33:20
 
 ### Interpretação
 
-A versão encontrada deve ser comparada com o estado de atualização esperado para o ambiente. Caso seja identificada uma vulnerabilidade conhecida, registrar a referência correspondente e explicar sua relação com a versão observada.
-
-O identificador `CVE-2023-XXXX` apresentado no estudo de caso é apenas um exemplo ilustrativo e não deve ser tratado como uma CVE real sem verificação.
+A versão encontrada é o Apache/2.4.66. Esta informação deve ser comparada com as bases de vulnerabilidade e os requisitos de atualização adotados para verificar se há vulnerabilidades conhecidas relevantes para esta versão específica no ambiente atual.
 
 ## 2.7 Registro das Evidências
 
 | ID | Evidência | Comando | Resultado | Status |
 |---|---|---|---|---|
-| E01 | Serviços e portas | `nmap -sV` | `preencher` | `preencher` |
-| E02 | Login root via SSH | `grep PermitRootLogin` | `preencher` | `preencher` |
-| E03 | Permissões web | `ls -la /var/www/html` | `preencher` | `preencher` |
-| E04 | Versão Apache | `apache2 -v` | `preencher` | `preencher` |
+| E01 | Serviços e portas | `nmap -sV` | `Portas 22 e 80 abertas` | `Coletado`|
+| E02 | Login root via SSH | `grep PermitRootLogin` | `PermitRootLogin yes` | `Coletado` |
+| E03 | Permissões web | `ls -la /var/www/html` | `Permissões 777 no diretório raizr` | `Coletado` |
+| E04 | Versão Apache | `apache2 -v` | `Apache/2.4.66` | `Coletado` |
 
 ## 2.8 Evidências Visuais
 
