@@ -21,9 +21,7 @@ A configuração observada na evidência E02 deve ser registrada aqui.
 
 **Resultado observado:**
 
-```text
-PREENCHER COM O RESULTADO REAL
-```
+PermitRootLogin yes
 
 ### Critério
 
@@ -57,11 +55,9 @@ Após a alteração, o serviço deve ser validado e a configuração deve ser no
 
 ### Condição
 
-Registrar a versão encontrada na evidência E04:
+Resultado observado
 
-```text
-Apache: PREENCHER
-```
+Server version: Apache/2.4.66 (Ubuntu)
 
 ### Critério
 
@@ -106,9 +102,7 @@ E03 — permissões de `/var/www/html`.
 
 Registrar o resultado real:
 
-```text
-PREENCHER
-```
+drwxrwxrwx 2 root root  4096 Aug 13 17:26 .
 
 ### Critério
 
@@ -116,9 +110,7 @@ Os arquivos do site devem possuir permissões compatíveis com sua finalidade, e
 
 ### Resultado da análise
 
-```text
-PREENCHER: CONFORME / NÃO CONFORME
-```
+NÃO CONFORME (Permissões 777 concedem acesso total a qualquer usuário).
 
 ### Observação
 
@@ -134,9 +126,8 @@ E01 — resultado do Nmap.
 
 Registrar as portas e serviços identificados:
 
-```text
-PREENCHER
-```
+22/tcp open  ssh
+80/tcp open  http
 
 ### Critério
 
@@ -144,9 +135,7 @@ Os serviços expostos devem ser necessários ao funcionamento do servidor e esta
 
 ### Resultado da análise
 
-```text
-PREENCHER: CONFORME / NÃO CONFORME
-```
+CONFORME (Apenas serviços essenciais para o propósito do servidor — web e administração — estão expostos).
 
 ### Observação
 
@@ -156,9 +145,9 @@ Uma porta aberta não constitui, isoladamente, uma vulnerabilidade. O achado dev
 
 | ID | Achado | Evidência | Severidade | Status |
 |---|---|---|---|---|
-| A01 | Login root via SSH | E02 | Alto, se confirmado | `preencher` |
-| A02 | Apache desatualizado/vulnerável | E04 | Médio, se confirmado | `preencher` |
-| A03 | Permissões inadequadas | E03 | `preencher` | `preencher` |
-| A04 | Serviço indevidamente exposto | E01 | `preencher` | `preencher` |
+| A01 | Login root via SSH | E02 | Alto, se confirmado | `Confirmado` |
+| A02 | Apache desatualizado/vulnerável | E04 | Médio, se confirmado | `Confirmado` |
+| A03 | Permissões inadequadas | E03 | `Alto` | `Confirmado` |
+| A04 | Serviço indevidamente exposto | E01 | `N/A` | `Conforme(Sem achado)` |
 
 > Os achados A03 e A04 são condicionais. Devem permanecer como não conformidades somente se as evidências coletadas demonstrarem a existência do problema.
